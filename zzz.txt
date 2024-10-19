@@ -24,10 +24,12 @@ git branch -D main
 git branch -m main 
 git push -f origin main
 
-#docker  
+#docker
 brew install --cask docker
 open -a Docker
 docker images
+docker build .
+docker run <image_name>
 docker rmi <image_id>
 docker ps -a
 docker stop <container_id>
