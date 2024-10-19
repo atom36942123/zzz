@@ -63,6 +63,15 @@ with
 x as (select * from follow where created_by_id=23 offset 0 limit 10)
 select x.id as follow_id,u.id,u.username,u.profile_pic_url from x left join users as u on x.user_id=u.id
 
+#followers search
+with 
+x as (select * from follow where user_id=23),
+y as (select x.id follow_id,u.id,u.username,u.profile_pic_url,(case when x.created_by_id in (select user_id from follow where created_by_id=23) then 0 else 1 end) as fb from x left join users as u on x.created_by_id=u.id) 
+select * from y where username ilike '%kal%' offset 0 limit 10
+
+
+
+
 # #follow-following
 with 
 x as (select * from follow where created_by_id in (select user_id from follow where created_by_id=1)),
