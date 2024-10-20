@@ -69,16 +69,13 @@ x as (select * from follow where user_id=23),
 y as (select x.id follow_id,u.id,u.username,u.profile_pic_url,(case when x.created_by_id in (select user_id from follow where created_by_id=23) then 0 else 1 end) as fb from x left join users as u on x.created_by_id=u.id) 
 select * from y where username ilike '%kal%' offset 0 limit 10
 
-
-
-
-# #follow-following
+#follow-following
 with 
 x as (select * from follow where created_by_id in (select user_id from follow where created_by_id=1)),
 y as (select distinct(created_by_id) from x where user_id=1 limit 10 offset 0)
 select u.* from y left join users as u on y.created_by_id=u.id
 
-# #follow-following not back
+#follow-following not back
 with 
 x as (select * from follow where created_by_id in (select user_id from follow where created_by_id=1)),
 y as (select distinct(created_by_id) from x where created_by_id not in (select created_by_id from x where user_id=1) limit 10 offset 0)
